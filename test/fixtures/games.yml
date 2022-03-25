@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name_en: MyString
+  name_jp: MyString
+  playing_time: 1
+
+two:
+  name_en: MyString
+  name_jp: MyString
+  playing_time: 1

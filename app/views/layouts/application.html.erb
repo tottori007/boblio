@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BoBLIO-thek(ボブリオ-テーク)</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <% if flash[:notice] %>
+      <div class="notification is-info">
+        <p class="notice"><%= notice %></p>
+      </div>
+    <% end %>
+
+    <% if flash[:alert] %>
+      <div class="notification is-danger">
+        <p class="alert"><%= alert %></p>
+      </div>
+    <% end %>
+
+    <nav class="navbar is-warning">
+      <div class="navbar-brand">
+        <%= link_to root_path, class: "navbar-item" do %>
+          <h1 class="title is-4" style="font-family: gotham;">BoBLIO-thek</h1>
+        <% end %>
+        <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <%= yield %>
+  </body>
+</html>

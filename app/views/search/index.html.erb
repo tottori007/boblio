@@ -1,0 +1,128 @@
+<section class="hero is-small is-primary">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        ボードゲーム一覧
+      </h1>
+    </div>
+  </div>
+</section>
+
+<%= form_with url: search_index_path, method: :get, local: true do |f| %>
+<nav class="panel">
+  <div class="panel-block">
+    <p class="control has-icons-left">
+      <%= f.text_field :keyword, value: @keyword, class: 'input form-control', :placeholder => "Search" %>
+      <span class="icon is-left">
+        <i class="fas fa-search" aria-hidden="true"></i>
+      </span>
+    </p>
+  </div>
+  <div class="panel-block">
+    <div class="field">
+      <div class="select">
+        <%= f.select :playing_time, Constants::PLAYING_TIME, selected: @playing_time, include_blank: Constants::PLAYING_TIME_TEXT %>
+      </div>
+    </div>
+    <div class="field">
+      <div class="select">
+        <%= f.select :player, Constants::PLAYER, selected: @player, include_blank: Constants::PLAYER_TEXT %>
+      </div>
+    </div>
+    <div class="field">
+      <%= f.label :Best %>
+      <%= f.check_box :best, id: :best, include_hidden:false, :as => :boolean, checked: !@best.to_i.zero? %>
+    </div>
+    <div class="field">
+      <%= f.label :発売年, for: :year %>
+      <%= f.hidden_field :miny, :value => @miny %>
+      <%= f.hidden_field :maxy, :value => @maxy %>
+      <input type="hidden" id="min_year" value=<%=Constants::RELEASE_YEAR_MIN %> >
+      <input type="hidden" id="max_year" value=<%=Constants::RELEASE_YEAR_MAX %> >
+      <input type="text" id="year" readonly style="border:0;">
+      <div id="slider-range"></div>
+    </div>
+<!--
+    <div class="field">
+      <%= f.label :発売年, for: :year %>
+      <%= f.text_field :year, id: :year, style: "border:0;" %>
+      <div id="slider-range"></div>
+    </div>
+    <div class="field">
+      <label for="year">発売年:</label>
+      <input type="text" id="year" readonly style="border:0;">
+      <div id="slider-range"></div>
+    </div>
+-->
+<!--
+      <%= f.label :発売年 %>
+      <%= f.range_field :year, :min=>1980, :max=>2022, :values=>0, :step=>1, :range=>true, :type=>"range", :class=>"slider has-output is-fullwidth is-success", :id=>"sliderWithValue"%>
+      <output for="sliderWithValue">-</output>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bulma-slider@2.0.4/dist/js/bulma-slider.min.js"></script>
+    <script>bulmaSlider.attach();</script>
+-->
+  </div>
+  <div class="panel-block">
+    <button class="button is-link is-outlined is-fullwidth">
+      <%= Constants::SEARCH_TEXT %>
+    </button>
+  </div>
+<% end %>
+</nav>
+
+<section class="section">
+
+  <div class="container">
+    <div class="columns">
+      <div class="column has-text-right py-0">
+        Total : <%= @games.size %>
+      </div>
+    </div>
+    <div class="columns is-multiline">
+      <% @games.each.with_index do |game, i| %>
+        <div class="column is-2">
+          <div class="card">
+            <div class="card-image">
+              <figure class="is-flex is-align-items-center is-justify-content-center image">
+                <%= link_to search_path(game) do %>
+                  <% if !game.thumbnail_url.nil? %>
+                    <img src="<%= game.thumbnail_url %>" />
+                  <% else %>
+                    <img src="/assets/no-image" />
+                  <% end %>
+                <% end %>
+              </figure>
+            </div>
+            <div class="card-content">
+              <div class="content content-title">
+                <%=link_to get_name_jp(game), search_path(game) %>
+              </div>
+              <div class="content">
+                <span class="icon is-left">
+                  <i class="far fa-clock" aria-hidden="true"></i>
+                </span>
+                <%= game.playing_time %>min 
+                <span class="icon is-left">
+                  <i class="far fa-calendar-alt" aria-hidden="true"></i>
+                </span>
+                <%= game.release_year %>
+                <br>
+                <span class="icon is-left">
+                  <i class="fas fa-users" aria-hidden="true"></i>
+                </span>
+                <%= get_player(game.player_min, game.player_max, game.player_best) %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <%= paginate @games %>
+    </div>
+  </div>
+</section>

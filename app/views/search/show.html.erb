@@ -1,0 +1,78 @@
+<section class="hero is-small is-primary">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        <%= get_name_jp(@game) %></p>
+      </h1>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-7">
+        <div class="card">
+          <div class="card-image">
+            <figure class="is-flex is-align-items-center is-justify-content-center image">
+              <% if @game.image_url %>
+                <img src="<%= @game.image_url %>" />
+              <% else %>
+                <img src="/assets/no-image" />
+              <% end %>
+              <%#= attachment_image_tag @recipe, :image %>
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-4"><%= get_name_jp(@game) %></p>
+              </div>
+              <% if get_name_jp(@game) != @game.name_en %>
+                <div class="media-content">
+                  <p class="title is-4"><%= @game.name_en %></p>
+                </div>
+              <% end %>
+            </div>
+            <div class="content">
+              <table class="table is-bordered is-striped is-three-quarters">
+                <tr>
+                  <td class="is-2">タイトル</td>
+                  <td class="is-2"><%= get_name_jp(@game) %></td>
+                </tr>
+              <% if get_name_jp(@game) != @game.name_en %>
+                <tr>
+                  <td>タイトル(英語)</td>
+                  <td><%= @game.name_en %></td>
+                </tr>
+              <% end %>
+                <tr>
+                  <td>プレイ人数</td>
+                  <td><%= get_player(@game.player_min, @game.player_max, @game.player_best) %></td>
+                </tr>
+                <tr>
+                  <td>プレイ時間</td>
+                  <td>
+                    <%= @game.playing_time %>分
+                    <% if @game.playing_time_min != @game.playing_time_max %>
+                       (<%= "#{@game.playing_time_min}-#{@game.playing_time_max}" %>分)
+                    <% end %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>発売年</td>
+                  <td><%= @game.release_year %>年</td>
+                </tr>
+                <tr>
+                  <td>対象年齢</td>
+                  <td><%= @game.age_min %>歳以上</td>
+                </tr>
+              </table>
+              <%= link_to "戻る", :back, class: "button is-success" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
