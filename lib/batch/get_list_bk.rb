@@ -2,12 +2,6 @@
 # IN  file: tmp/bgglist/[filename]
 # OUT file: tmp/bgglist/listYYYYMMDDHHMM.csv
 
-BGG_URL_BASE = "https://api.geekdo.com/xmlapi2/thing?"
-IN_FILE_PATH = "tmp/bgglist/"
-OUT_FILE_PATH = "tmp/bgglist/"
-OUT_FINE_NAME = "list" # listYYYYMMDDHHMM.csv
-PAGE_ROW_COUNT = 100
-
 class Batch::GetList
   require 'rexml/document'
 
@@ -15,49 +9,37 @@ class Batch::GetList
     puts '--- Batch::GetList.getList START ---'
 
     if ARGV[0]
-      open_file_name = ::IN_FILE_PATH + ARGV[0]
+      open_file_name = "tmp/bgglist/"+ARGV[0]
     else
       puts '--- Please specify a file name ---'
       return
     end
 
-    id = []
-    page = 0
-    row_count = 0
-
+    id = ""
+    page = ARGV[0].rpartition("page")
     File.open(open_file_name, "r") do |f|
-      id[page] = ""
-      f.each_line do |line|
-        id[page] += line.chomp
-        id[page] += ","
-        row_count += 1
-        if row_count % ::PAGE_ROW_COUNT  == 0
-          id[page] = id[page].chop
-          page += 1
-          id[page] = ""
-        end
-      end
-      id[page] = id[page].chop
+      f.each_line { |line|
+        id += line.chomp
+        id += ","
+      }
     end
+    id = id.chop
 
-    puts '--- Read ' + open_file_name + ' ---'
-    puts '--- Total  page:'+page.to_s.next+'  row:'+row_count.to_s + ' ---'
+    puts '--- Read '+open_file_name+' ---'
 
-    row_data = []
-    row_count = 0
-    id.each.with_index(1) do |p_id, n|
-      palams = URI.encode_www_form(id: p_id)
-      uri = URI.parse(::BGG_URL_BASE + palams)
-      response = Net::HTTP.get_response(uri)
-      doc = REXML::Document.new(response.body)
+    palams = URI.encode_www_form(id: id)
+    uri = URI.parse("https://api.geekdo.com/xmlapi2/thing?" + palams)
+    response = Net::HTTP.get_response(uri)
+    doc = REXML::Document.new(response.body)
 
-      puts '--- Request '+uri.to_s+' ---'
+    time_stamp = DateTime.now.strftime('%Y%m%d%H%M')
+    file_name = "tmp/bgglist/list" + time_stamp + page[1] + page[2] + ".csv"
 
+    File.open(file_name, "w") do |num|
+      num.puts('name_en,release_year,player_min,player_max,player_best,playing_time,playing_time_min,playing_time_max,age_min,game_id,image_url,thumbnail_url')
       doc.elements.each('items/item') do |element|
         line = ""
-        line += element.attributes["id"]
-        line += ","
-        line += '"'+element.elements["name"].attributes["value"]+'"'
+        line += element.elements["name"].attributes["value"]
         line += ","
         line += element.elements["yearpublished"].attributes["value"]
         line += ","
@@ -65,7 +47,7 @@ class Batch::GetList
         line += ","
         line += element.elements["maxplayers"].attributes["value"]
         line += ","
-        line += get_bestplayer(element.elements["poll[@title='User Suggested Number of Players']"])
+        line += get_bestplayer(element.elements["poll"])
         line += ","
         line += element.elements["playingtime"].attributes["value"]
         line += ","
@@ -75,27 +57,17 @@ class Batch::GetList
         line += ","
         line += element.elements["minage"].attributes["value"]
         line += ","
-        line += element.elements["image"].text if element.elements["image"].present?
+        line += element.attributes["id"]
         line += ","
-        line += element.elements["thumbnail"].text if element.elements["thumbnail"].present?
-        row_data[row_count] = line
-        row_count += 1
-      end
-    end
-
-    time_stamp = DateTime.now.strftime('%Y%m%d%H%M')
-    file_name = ::OUT_FILE_PATH + ::OUT_FINE_NAME + time_stamp + ".csv"
-
-    File.open(file_name, "w") do |num|
-      num.puts('game_id,name_en,release_year,player_min,player_max,player_best,playing_time,playing_time_min,playing_time_max,age_min,image_url,thumbnail_url')
-      row_data.each do |r|
-        num.puts(r)
+        line += element.elements["image"].text
+        line += ","
+        line += element.elements["thumbnail"].text
+        num.puts(line)
       end
     end
 
     puts '--- Create '+file_name+' ---'
 
-=begin
     file_name_desc = "tmp/bgglist/desc" + time_stamp + page[1] + page[2] + ".csv"
 
     File.open(file_name_desc, "w") do |num|
@@ -109,22 +81,17 @@ class Batch::GetList
     end
 
     puts '--- Create '+file_name_desc+' ---'
-=end
-    puts '--- Batch::GetList.getList END ---'
 
+    puts '--- Batch::GetList.getList END ---'
   end
 end
 
 private
-# Best*2 + Reco - NotReco のスコアが高いものを抽出
 def get_bestplayer(poll)
-
-  return "" if poll.nil?
 
   best_player = ""
   best_score = 0
   poll.elements.each('results') do |element|
-    return best_player if element.elements["result"].nil?
     score = 0
     score += element.elements["result[@value='Best']"].attributes["numvotes"].to_i * 2
     score += element.elements["result[@value='Recommended']"].attributes["numvotes"].to_i

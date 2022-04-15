@@ -12,6 +12,8 @@
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel=”apple-touch-icon” href=”/assets/apple-touch-icon.png” sizes=”180×180″>
+    <link rel="shortcut icon" href="/assets/favicon.ico"/>
   </head>
 
   <body>
@@ -27,10 +29,10 @@
       </div>
     <% end %>
 
-    <nav class="navbar is-warning">
+    <nav class="navbar">
       <div class="navbar-brand">
-        <%= link_to root_path, class: "navbar-item" do %>
-          <h1 class="title is-4" style="font-family: gotham;">BoBLIO-thek</h1>
+        <%= link_to search_index_path, class: "navbar-item" do %>
+          <h1 class="title is-3">BoBLIO-thek</h1>
         <% end %>
         <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
           <span></span>

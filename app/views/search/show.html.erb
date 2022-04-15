@@ -1,3 +1,4 @@
+<!--
 <section class="hero is-small is-primary">
   <div class="hero-body">
     <div class="container">
@@ -7,6 +8,7 @@
     </div>
   </div>
 </section>
+-->
 
 <section class="section">
   <div class="container">
@@ -67,6 +69,20 @@
                   <td>対象年齢</td>
                   <td><%= @game.age_min %>歳以上</td>
                 </tr>
+              <% if @game.game_option.description_jp.present?  %>
+                <tr>
+                  <td colspan="2">ゲーム詳細</td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <div class="grad-wrap">
+                        <input id="trigger1" class="grad-trigger" type="checkbox">
+                        <label class="grad-btn" for="trigger1"></label>
+                        <div class="grad-item"><%= @game.game_option.description_jp.html_safe %></div>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
               </table>
               <%= link_to "戻る", :back, class: "button is-success" %>
             </div>

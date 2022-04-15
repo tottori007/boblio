@@ -1,3 +1,4 @@
+<!--
 <section class="hero is-small is-primary">
   <div class="hero-body">
     <div class="container">
@@ -7,6 +8,7 @@
     </div>
   </div>
 </section>
+-->
 
 <%= form_with url: search_index_path, method: :get, local: true do |f| %>
 <nav class="panel">
@@ -33,6 +35,8 @@
       <%= f.label :Best %>
       <%= f.check_box :best, id: :best, include_hidden:false, :as => :boolean, checked: !@best.to_i.zero? %>
     </div>
+  </div>
+  <div class="panel-block">
     <div class="field">
       <%= f.label :発売年, for: :year %>
       <%= f.hidden_field :miny, :value => @miny %>
@@ -75,7 +79,7 @@
   <div class="container">
     <div class="columns">
       <div class="column has-text-right py-0">
-        Total : <%= @games.size %>
+        Total : <%= @games.size %> / <%= @size %>
       </div>
     </div>
     <div class="columns is-multiline">

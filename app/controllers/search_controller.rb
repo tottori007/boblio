@@ -4,6 +4,7 @@ class SearchController < ApplicationController
 
   def index
     @games = Game.joins("LEFT OUTER JOIN game_options ON games.game_id = game_options.game_id").search(params).order("release_year DESC").order("games.game_id DESC").page(params[:page])
+    @size = Game.joins("LEFT OUTER JOIN game_options ON games.game_id = game_options.game_id").search(params).size
     @keyword = params[:keyword]
     @playing_time = params[:playing_time]
     @player = params[:player]

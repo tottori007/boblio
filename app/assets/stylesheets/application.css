@@ -17,6 +17,19 @@
 @import "bulma";
 @import "bulma-extensions";
 
+/* application */
+nav.navbar{
+  background-color: #c3d600;
+}
+nav .title{
+  font-family: gotham;
+  color: #FFFFFF;
+  text-shadow:1px 1px 0 #CC0, -1px -1px 0 #CC0,
+              -1px 1px 0 #CC0, 1px -1px 0 #CC0,
+              0px 1px 0 #CC0,  0-1px 0 #CC0,
+              -1px 0 0 #CC0, 1px 0 0 #CC0;
+}
+
 .notification:not(:last-child){
   margin-bottom: 0;
 }
