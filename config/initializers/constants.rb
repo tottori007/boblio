@@ -5,6 +5,8 @@ module Constants
   CSV_PATH = "db/csv/"
   CSV_FILE_GAMES = "games.csv"
   CSV_FILE_GAME_OPTIONS = "game_options.csv"
+  CSV_FILE_DESIGNERS = "designers.csv"
+  CSV_FILE_M_DESIGNERS = "m_designers.csv"
 
   #search/index
   SEARCH_TEXT = "Filters"

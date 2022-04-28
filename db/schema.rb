@@ -10,9 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_17_085614) do
+ActiveRecord::Schema.define(version: 2022_04_27_025434) do
 
-  create_table "game_options", force: :cascade do |t|
+  create_table "designers", force: :cascade do |t|
+    t.integer "game_id"
+    t.integer "designer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "game_options", id: false, force: :cascade do |t|
     t.integer "game_id", null: false
     t.string "name_jp"
     t.text "description_en"
@@ -38,6 +45,14 @@ ActiveRecord::Schema.define(version: 2022_03_17_085614) do
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_games_on_game_id"
     t.index ["name_en"], name: "index_games_on_name_en"
+  end
+
+  create_table "m_designers", primary_key: "designer_id", force: :cascade do |t|
+    t.string "name"
+    t.string "name_jp"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["designer_id"], name: "index_m_designers_on_designer_id"
   end
 
 end

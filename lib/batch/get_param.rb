@@ -85,29 +85,34 @@ class Batch::GetParam
         when "exp"
           description = element.elements[param].text
           line += '"'+description+'"'
+          row_data[row_count] = line
+          row_count += 1
         when "ejp"
           description = element.elements[param].text
           description_jp = get_translate_jp(replace_title_jp(game_id, description))
           line += '"'+description_jp+'"'
+          row_data[row_count] = line
+          row_count += 1
         when "pub"
           line += game_id
           line += ","
           line += element.elements[param].attributes["id"]
           line += ","
           line += element.elements[param].attributes["value"]
+          row_data[row_count] = line
+          row_count += 1
         else
-          line += game_id
-          line += ","
           element.elements.each(param) do |p|
+            line = ""
+            line += game_id
+            line += ","
             line += p['id']
             line += ","
             line += p['value']
-            line += ","
+            row_data[row_count] = line
+            row_count += 1
           end
-          line = line.chop
         end
-        row_data[row_count] = line
-        row_count += 1
       end
     end
 

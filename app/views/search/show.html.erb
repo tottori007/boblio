@@ -62,6 +62,15 @@
                   </td>
                 </tr>
                 <tr>
+                  <td>デザイナー</td>
+                  <td>
+                    <% @game.designer.each() do |d| %>
+                      <%= link_to d.m_designer.name, designer_path(d.m_designer.designer_id) %>
+                      <br>
+                    <% end %>
+                  </td>
+                </tr>
+                <tr>
                   <td>発売年</td>
                   <td><%= @game.release_year %>年</td>
                 </tr>
