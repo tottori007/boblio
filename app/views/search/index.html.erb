@@ -36,6 +36,7 @@
       <%= f.check_box :best, id: :best, include_hidden:false, :as => :boolean, checked: !@best.to_i.zero? %>
     </div>
   </div>
+<!--
   <div class="panel-block">
     <div class="field">
       <%= f.label :発売年, for: :year %>
@@ -46,6 +47,7 @@
       <input type="text" id="year" readonly style="border:0;">
       <div id="slider-range"></div>
     </div>
+-->
 <!--
     <div class="field">
       <%= f.label :発売年, for: :year %>
@@ -74,8 +76,14 @@
 <% end %>
 </nav>
 
+<% if @games.nil? %>
 <section class="section">
-
+  <div class="container">
+    該当なし
+  </div>
+</section>
+<% else %>
+<section class="section">
   <div class="container">
     <div class="columns">
       <div class="column has-text-right py-0">
@@ -130,3 +138,4 @@
     </div>
   </div>
 </section>
+<% end %>

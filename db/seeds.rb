@@ -33,6 +33,8 @@ CSV.foreach(file_name_game_options, headers: true) do |row|
   GameOption.create!(
     game_id: row['game_id'],
     name_jp: row['name_jp'],
+    expansion: row['expansion'],
+    play_limit: row['play_limit'],
     description_en: row['description_en'],
     description_jp: row['description_jp']
   )

@@ -13,13 +13,13 @@ module Constants
 
   PLAYING_TIME_TEXT = "プレイ時間"
   PLAYING_TIME = {
-    "30分以内": 1,
-    "30~60分": 2,
-    "60分以上": 3 
+    "30min 未満": 1,
+    "30-60min 未満": 2,
+    "60min 以上": 3
   }.freeze
   PLAYING_TIME_COND = {
-    "1": Float::MIN..30,
-    "2": 30..60,
+    "1": Float::MIN..29,
+    "2": 30..59,
     "3": 60..Float::INFINITY
   }.freeze
 

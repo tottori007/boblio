@@ -4,16 +4,17 @@ class SearchController < ApplicationController
 
   def index
 #    @games = Game.joins("LEFT OUTER JOIN game_options ON games.game_id = game_options.game_id").search(params).order("release_year DESC").order("games.game_id DESC").page(params[:page])
+#    @size = Game.joins("LEFT OUTER JOIN game_options ON games.game_id = game_options.game_id").search(params).size
 #    @games = Game.references(:game_options).search(params).order("release_year DESC").order("games.game_id DESC").page(params[:page])
 #    @size = Game.references(:game_options).search(params).size
-    @games = Game.search(params).order("release_year DESC").order("games.game_id DESC").page(params[:page])
-    @size = Game.search(params).size
+    @games = Game.left_joins(:game_option).search(params).order("release_year DESC").order("games.game_id DESC").page(params[:page])
+    @size = Game.left_joins(:game_option).search(params).size
     @keyword = params[:keyword]
     @playing_time = params[:playing_time]
     @player = params[:player]
     @best = params[:best]
-    @miny = params[:miny].present? ? params[:miny] : Constants::RELEASE_YEAR_MIN
-    @maxy = params[:maxy].present? ? params[:maxy] : Constants::RELEASE_YEAR_MAX
+#    @miny = params[:miny].present? ? params[:miny] : Constants::RELEASE_YEAR_MIN
+#    @maxy = params[:maxy].present? ? params[:maxy] : Constants::RELEASE_YEAR_MAX
 #    @game_image = get_image_url_all(@games)
   end
 

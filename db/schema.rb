@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 2022_04_27_025434) do
   create_table "game_options", id: false, force: :cascade do |t|
     t.integer "game_id", null: false
     t.string "name_jp"
+    t.integer "expansion"
+    t.integer "play_limit"
     t.text "description_en"
     t.text "description_jp"
     t.datetime "created_at", null: false

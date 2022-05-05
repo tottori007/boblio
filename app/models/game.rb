@@ -5,11 +5,13 @@ class Game < ApplicationRecord
 
   scope :search, -> (search_params) do
     return if search_params.blank?
-      name_like(search_params[:keyword])
+    name_like(search_params[:keyword])
       .play_time(search_params[:playing_time])
       .player(search_params[:player], search_params[:best])
       .player_best(search_params[:player], search_params[:best])
       .year(search_params[:miny], search_params[:maxy])
+      .where(["expansion IS NULL"])
+      .where(["play_limit IS NULL"])
   end
 
   scope :name_like, -> (keyword) { where(["name_jp like? OR name_en like?", "%#{keyword}%", "%#{keyword}%"]) if keyword.present? }
