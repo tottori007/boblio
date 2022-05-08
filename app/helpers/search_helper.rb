@@ -7,7 +7,9 @@ module SearchHelper
     return player
   end
   def get_name_jp(game)
-    game.game_option.name_jp.present? ? game.game_option.name_jp : game.name_en
+    game_opt = game.game_option
+    return game.name_en if game_opt.nil?
+    game_opt.name_jp.present? ? game_opt.name_jp : game.name_en
   end
   def get_translate_jp(text_en)
     text = CGI.unescapeHTML text_en
