@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_27_025434) do
+ActiveRecord::Schema.define(version: 2022_05_12_043743) do
 
   create_table "designers", force: :cascade do |t|
     t.integer "game_id"
@@ -55,6 +55,22 @@ ActiveRecord::Schema.define(version: 2022_04_27_025434) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["designer_id"], name: "index_m_designers_on_designer_id"
+  end
+
+  create_table "m_publishers", primary_key: "publisher_id", force: :cascade do |t|
+    t.string "name"
+    t.string "country"
+    t.string "official_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["publisher_id"], name: "index_m_publishers_on_publisher_id"
+  end
+
+  create_table "publishers", force: :cascade do |t|
+    t.integer "game_id"
+    t.integer "publisher_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

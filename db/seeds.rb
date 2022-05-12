@@ -52,6 +52,18 @@ CSV.foreach(file_name_m_designers, headers: true) do |row|
 end
 puts "----- SEED:m_designers END -----"
 
+puts "----- SEED:m_publishers START -----"
+file_name_m_publishers = Constants::CSV_PATH + Constants::CSV_FILE_M_PUBLISHERS
+CSV.foreach(file_name_m_publishers, headers: true) do |row|
+  MPublisher.create!(
+    publisher_id: row['publisher_id'],
+    name: row['name'],
+    country: row['country'],
+    official_url: row['official_url']
+  )
+end
+puts "----- SEED:m_publishers END -----"
+
 puts "----- SEED:designers START -----"
 file_name_designers = Constants::CSV_PATH + Constants::CSV_FILE_DESIGNERS
 CSV.foreach(file_name_designers, headers: true) do |row|
@@ -61,6 +73,16 @@ CSV.foreach(file_name_designers, headers: true) do |row|
   )
 end
 puts "----- SEED:designers END -----"
+
+puts "----- SEED:publishers START -----"
+file_name_publishers = Constants::CSV_PATH + Constants::CSV_FILE_PUBLISHERS
+CSV.foreach(file_name_publishers, headers: true) do |row|
+  Publisher.create!(
+    game_id: row['game_id'],
+    publisher_id: row['publisher_id']
+  )
+end
+puts "----- SEED:publishers END -----"
 
 =begin
 Game.create(name_jp: 'Boonlake', name_en: 'Boonlake', playing_time: '160', bgg_id: '343905',)

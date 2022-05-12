@@ -2,6 +2,7 @@ class Game < ApplicationRecord
   self.primary_key = :game_id
   has_one :game_option
   has_many :designer
+  has_many :publisher
 
   scope :search, -> (search_params) do
     return if search_params.blank?

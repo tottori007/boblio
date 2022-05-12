@@ -7,6 +7,8 @@ module Constants
   CSV_FILE_GAME_OPTIONS = "game_options.csv"
   CSV_FILE_DESIGNERS = "designers.csv"
   CSV_FILE_M_DESIGNERS = "m_designers.csv"
+  CSV_FILE_PUBLISHERS = "publishers.csv"
+  CSV_FILE_M_PUBLISHERS = "m_publishers.csv"
 
   #search/index
   SEARCH_TEXT = "Filters"

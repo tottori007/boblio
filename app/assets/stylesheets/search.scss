@@ -50,3 +50,13 @@
 .grad-trigger:checked ~ .grad-item::before {
   display: none;
 }
+
+p.country {
+  position:absolute;
+  bottom: 1.3em;
+  right: 0.5em;
+}
+p.country img {
+  width: 24px;
+  height: auto;
+}

@@ -1,4 +1,4 @@
-# bundle exec rails runner Batch::GetList.getPalam [filename] [param]
+# bundle exec rails runner Batch::GetParam.getParam [filename] [param]
 # IN  file: tmp/bgglist/[filename]
 # IN  param:
 #   exp -> description
@@ -98,7 +98,7 @@ class Batch::GetParam
           line += ","
           line += element.elements[param].attributes["id"]
           line += ","
-          line += element.elements[param].attributes["value"]
+          line += '"'+element.elements[param].attributes["value"]+'"'
           row_data[row_count] = line
           row_count += 1
         else
@@ -108,7 +108,7 @@ class Batch::GetParam
             line += ","
             line += p['id']
             line += ","
-            line += p['value']
+            line += '"'+p['value']+'"'
             row_data[row_count] = line
             row_count += 1
           end
