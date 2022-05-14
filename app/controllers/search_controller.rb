@@ -21,7 +21,7 @@ class SearchController < ApplicationController
   def show
     @game = Game.find_by(game_id: params[:id])
     if @game.nil?
-      redirect_to search_index_path
+      redirect_to boblio_path
     end
 #    @game_image = get_image_url(@game.bgg_id)
   end
@@ -29,7 +29,7 @@ class SearchController < ApplicationController
   def designer
     @designer = MDesigner.find_by(designer_id: params[:id])
     if @designer.nil?
-      redirect_to search_index_path
+      redirect_to boblio_path
     end
     @games = Designer.where(designer_id: params[:id])
   end

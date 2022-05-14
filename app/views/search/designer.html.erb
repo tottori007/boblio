@@ -26,7 +26,7 @@
           <div class="card">
             <div class="card-image">
               <figure class="is-flex is-align-items-center is-justify-content-center image">
-                <%= link_to search_path(game) do %>
+                <%= link_to detail_path(game) do %>
                   <% if !game.thumbnail_url.nil? %>
                     <img src="<%= game.thumbnail_url %>" />
                   <% else %>
@@ -37,7 +37,7 @@
             </div>
             <div class="card-content">
               <div class="content content-title">
-                <%=link_to get_name_jp(game), search_path(game) %>
+                <%=link_to get_name_jp(game), detail_path(game) %>
               </div>
               <div class="content">
                 <span class="icon is-left">

@@ -70,10 +70,18 @@
                     <% end %>
                   </td>
                 </tr>
+              <% publisher = @game.publisher.first %>
+              <% if publisher.present?%>
                 <tr>
                   <td>出版社</td>
-                  <td><%= @game.publisher.first.m_publisher.name %></td>
+                  <td>
+                    <%= publisher.m_publisher.name %>
+                    <% if publisher.m_publisher.official_url %>
+                      (<%= link_to 'Official Site', publisher.m_publisher.official_url, target: :_blank %>)
+                    <% end %>
+                  </td>
                 </tr>
+              <% end %>
                 <tr>
                   <td>発売年</td>
                   <td><%= @game.release_year %>年</td>
